@@ -28,4 +28,17 @@ def test_read_file(tmp_path):
     file = d / "test.txt"
     content = "hello world"
     file.write_text(content, encoding='utf-8')
+    
     assert read_file(str(file)) == content
+
+def test_save_results(tmp_path):
+    d = tmp_path / "output"
+    d.mkdir()
+    file = d / "result.txt"
+    data = [("apple", 5), ("banana", 3)]
+    save_results(data, str(file))
+    with open(file, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+        
+    assert lines[0] == "apple-5\n"
+    assert lines[1] == "banana-3\n"
